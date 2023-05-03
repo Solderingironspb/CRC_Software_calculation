@@ -1,16 +1,16 @@
 /**
  ******************************************************************************
  *  @file CRC_Software_calculation.c
- *  @brief Программный расчет CRC: CRC8, CRC16, CRC32
- *  @author Волков Олег
+ *  @brief РџСЂРѕРіСЂР°РјРјРЅС‹Р№ СЂР°СЃС‡РµС‚ CRC: CRC8, CRC16, CRC32
+ *  @author Р’РѕР»РєРѕРІ РћР»РµРі
  *  @date 03.05.2023
  *
  *  YouTube: https://www.youtube.com/channel/UCzZKTNVpcMSALU57G1THoVw
  *  GitHub: https://github.com/Solderingironspb
- *  Группа ВК: https://vk.com/solderingiron.stm32
- *  Про CRC на википедии: https://ru.wikipedia.org/wiki/%D0%A6%D0%B8%D0%BA%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%B8%D0%B7%D0%B1%D1%8B%D1%82%D0%BE%D1%87%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D0%B4
- *  Урок по CRC: https://youtu.be/YyQonUJrBn4
- *  Для проверки себя: http://www.sunshine2k.de/coding/javascript/crc/crc_js.html
+ *  Р“СЂСѓРїРїР° Р’Рљ: https://vk.com/solderingiron.stm32
+ *  РџСЂРѕ CRC РЅР° РІРёРєРёРїРµРґРёРё: https://ru.wikipedia.org/wiki/%D0%A6%D0%B8%D0%BA%D0%BB%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%B8%D0%B7%D0%B1%D1%8B%D1%82%D0%BE%D1%87%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D0%B4
+ *  РЈСЂРѕРє РїРѕ CRC: https://youtu.be/YyQonUJrBn4
+ *  Р”Р»СЏ РїСЂРѕРІРµСЂРєРё СЃРµР±СЏ: http://www.sunshine2k.de/coding/javascript/crc/crc_js.html
  *
  ******************************************************************************
  */
@@ -21,7 +21,7 @@
 #include "main.h"
 #include <stdbool.h>
 
-/* Примеры CRC*/
+/* РџСЂРёРјРµСЂС‹ CRC*/
 /* CRC8:                InitVal 0x00, Polynome 0x07, RefIn false, Refout false, XorOut 0x00;
  * CRC8_SAE_J1850:      InitVal 0xFF, Polynome 0x1D, RefIn false, Refout false, XorOut 0xFF;
  * CRC8_SAE_J1850_ZERO: InitVal 0x00, Polynome 0x1D, RefIn false, Refout false, XorOut 0x00;
@@ -72,7 +72,7 @@
  * CRC32_XFER:          InitVal 0x00000000, Polynome 0x000000AF, RefIn false, Refout false, XorOut 0x00000000;
  */
 
-/*Пример использования функций*/
+/*РџСЂРёРјРµСЂ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ С„СѓРЅРєС†РёР№*/
 
 /*
 uint32_t Arr[4] = { 0x4F32CCDE, 0x5ABBCDDF, 0x5412DDAA, 0xFE32CB1A };
@@ -85,7 +85,7 @@ printf("CRC16_MODBUS = 0x%X\r\n", CRC16_Calculate_software((uint16_t*) &Arr1, si
 printf("CRC16_MODBUS = 0x%X\r\n", CRC16_Bytes_Calculate_software((uint8_t*) &Arr2, sizeof(Arr2), 0xFFFF, 0x8005, true, true, 0x0000));
 printf("CRC8_MAXIM = 0x%X\r\n", CRC8_Bytes_Calculate_software((uint8_t*) &Arr2, sizeof(Arr2), 0x00, 0x31, true, true, 0x00));
 
-Получим в консоли:
+РџРѕР»СѓС‡РёРј РІ РєРѕРЅСЃРѕР»Рё:
 CRC32_D = 0x719C9ACC
 CRC32_D = 0x719C9ACC
 CRC16_MODBUS = 0x7804
@@ -94,26 +94,26 @@ CRC8_MAXIM = 0x86
 
 */
 
-//Функции:
-/*Реверс бит*/
-uint8_t Reverse_LSB_MSB_8_Bit(uint8_t *Data); //Функция реверса 8 бит от LSB к MSB
-uint16_t Reverse_LSB_MSB_16_Bit(uint16_t *Data); //Функция реверса 16 бит от LSB к MSB
-uint32_t Reverse_LSB_MSB_32_Bit(uint32_t *Data); //Функция реверса 32 бит от LSB к MSB
+//Р¤СѓРЅРєС†РёРё:
+/*Р РµРІРµСЂСЃ Р±РёС‚*/
+uint8_t Reverse_LSB_MSB_8_Bit(uint8_t *Data); //Р¤СѓРЅРєС†РёСЏ СЂРµРІРµСЂСЃР° 8 Р±РёС‚ РѕС‚ LSB Рє MSB
+uint16_t Reverse_LSB_MSB_16_Bit(uint16_t *Data); //Р¤СѓРЅРєС†РёСЏ СЂРµРІРµСЂСЃР° 16 Р±РёС‚ РѕС‚ LSB Рє MSB
+uint32_t Reverse_LSB_MSB_32_Bit(uint32_t *Data); //Р¤СѓРЅРєС†РёСЏ СЂРµРІРµСЂСЃР° 32 Р±РёС‚ РѕС‚ LSB Рє MSB
 
 /*CRC-8*/
-/*Функция расчета контрольной суммы CRC8 с различными параметрами. Функция работает с данными, которые представлены в 8-битном формате.*/
+/*Р¤СѓРЅРєС†РёСЏ СЂР°СЃС‡РµС‚Р° РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ СЃСѓРјРјС‹ CRC8 СЃ СЂР°Р·Р»РёС‡РЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё. Р¤СѓРЅРєС†РёСЏ СЂР°Р±РѕС‚Р°РµС‚ СЃ РґР°РЅРЅС‹РјРё, РєРѕС‚РѕСЂС‹Рµ РїСЂРµРґСЃС‚Р°РІР»РµРЅС‹ РІ 8-Р±РёС‚РЅРѕРј С„РѕСЂРјР°С‚Рµ.*/
 uint8_t CRC8_Bytes_Calculate_software(uint8_t *Data, uint32_t Buffer_lenght, uint8_t InitVal, uint8_t Polynome, bool RefIn, bool RefOut, uint8_t XorOut);
 
 /*CRC-16*/
-/*Функция расчета контрольной суммы CRC16 с различными параметрами. Функция работает с данными, которые представлены в 8-битном формате.*/
+/*Р¤СѓРЅРєС†РёСЏ СЂР°СЃС‡РµС‚Р° РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ СЃСѓРјРјС‹ CRC16 СЃ СЂР°Р·Р»РёС‡РЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё. Р¤СѓРЅРєС†РёСЏ СЂР°Р±РѕС‚Р°РµС‚ СЃ РґР°РЅРЅС‹РјРё, РєРѕС‚РѕСЂС‹Рµ РїСЂРµРґСЃС‚Р°РІР»РµРЅС‹ РІ 8-Р±РёС‚РЅРѕРј С„РѕСЂРјР°С‚Рµ.*/
 uint16_t CRC16_Bytes_Calculate_software(uint8_t *Data, uint32_t Buffer_lenght, uint16_t InitVal, uint16_t Polynome, bool RefIn, bool RefOut, uint16_t XorOut);
-/*Функция расчета контрольной суммы CRC16 с различными параметрами. Функция работает с данными, которые представлены в 16-битном формате.*/
+/*Р¤СѓРЅРєС†РёСЏ СЂР°СЃС‡РµС‚Р° РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ СЃСѓРјРјС‹ CRC16 СЃ СЂР°Р·Р»РёС‡РЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё. Р¤СѓРЅРєС†РёСЏ СЂР°Р±РѕС‚Р°РµС‚ СЃ РґР°РЅРЅС‹РјРё, РєРѕС‚РѕСЂС‹Рµ РїСЂРµРґСЃС‚Р°РІР»РµРЅС‹ РІ 16-Р±РёС‚РЅРѕРј С„РѕСЂРјР°С‚Рµ.*/
 uint16_t CRC16_Calculate_software(uint16_t *Data, uint32_t Buffer_lenght, uint16_t InitVal, uint16_t Polynome, bool RefIn, bool RefOut, uint16_t XorOut);
 
 /*CRC-32*/
-/*Функция расчета контрольной суммы CRC32 с различными параметрами. Функция работает с данными, которые представлены в 8-битном формате.*/
+/*Р¤СѓРЅРєС†РёСЏ СЂР°СЃС‡РµС‚Р° РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ СЃСѓРјРјС‹ CRC32 СЃ СЂР°Р·Р»РёС‡РЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё. Р¤СѓРЅРєС†РёСЏ СЂР°Р±РѕС‚Р°РµС‚ СЃ РґР°РЅРЅС‹РјРё, РєРѕС‚РѕСЂС‹Рµ РїСЂРµРґСЃС‚Р°РІР»РµРЅС‹ РІ 8-Р±РёС‚РЅРѕРј С„РѕСЂРјР°С‚Рµ.*/
 uint32_t CRC32_Bytes_Calculate_software(uint8_t *Data, uint32_t Buffer_lenght, uint32_t InitVal, uint32_t Polynome, bool RefIn, bool RefOut, uint32_t XorOut);
-/*Функция расчета контрольной суммы CRC32 с различными параметрами. Функция работает с данными, которые представлены в 32-битном формате.*/
+/*Р¤СѓРЅРєС†РёСЏ СЂР°СЃС‡РµС‚Р° РєРѕРЅС‚СЂРѕР»СЊРЅРѕР№ СЃСѓРјРјС‹ CRC32 СЃ СЂР°Р·Р»РёС‡РЅС‹РјРё РїР°СЂР°РјРµС‚СЂР°РјРё. Р¤СѓРЅРєС†РёСЏ СЂР°Р±РѕС‚Р°РµС‚ СЃ РґР°РЅРЅС‹РјРё, РєРѕС‚РѕСЂС‹Рµ РїСЂРµРґСЃС‚Р°РІР»РµРЅС‹ РІ 32-Р±РёС‚РЅРѕРј С„РѕСЂРјР°С‚Рµ.*/
 uint32_t CRC32_Calculate_software(uint32_t *Data, uint32_t Buffer_lenght, uint32_t InitVal, uint32_t Polynome, bool RefIn, bool RefOut, uint32_t XorOut);
 
 #endif /* CRC_SOFTWARE_CALCULATION_H_ */
